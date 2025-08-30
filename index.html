@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TedBus - Online Bus Ticket Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="logo">
+                    <h1>TedBus</h1>
+                    <span>🚌</span>
+                </div>
+                <nav class="nav">
+                    <a href="#" class="nav__link active" data-section="home">Home</a>
+                    <a href="#" class="nav__link" data-section="bookings">My Bookings</a>
+                    <a href="#" class="nav__link" data-section="help">Help</a>
+                    <a href="#" class="nav__link" data-section="login">Login/Signup</a>
+                </nav>
+                <button class="mobile-menu-btn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home/Search Section -->
+        <section id="home-section" class="section active">
+            <div class="hero">
+                <div class="container">
+                    <div class="hero__content">
+                        <h2 class="hero__title">Book Your Journey with TedBus</h2>
+                        <p class="hero__subtitle">Travel safely and comfortably to your destination</p>
+                        
+                        <div class="search-form">
+                            <div class="search-form__row">
+                                <div class="form-group">
+                                    <label class="form-label">From</label>
+                                    <div class="dropdown-wrapper">
+                                        <select id="from-city" class="form-control">
+                                            <option value="">Select departure city</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <button class="swap-cities" id="swap-cities">⇄</button>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">To</label>
+                                    <div class="dropdown-wrapper">
+                                        <select id="to-city" class="form-control">
+                                            <option value="">Select destination city</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" id="travel-date" class="form-control" min="">
+                                </div>
+                                
+                                <button class="btn btn--primary search-btn" id="search-buses">
+                                    Search Buses
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Routes -->
+            <div class="popular-routes">
+                <div class="container">
+                    <h3>Popular Routes</h3>
+                    <div class="routes-grid">
+                        <div class="route-card">
+                            <span class="route">Mumbai → Pune</span>
+                            <span class="price">From ₹380</span>
+                        </div>
+                        <div class="route-card">
+                            <span class="route">Delhi → Jaipur</span>
+                            <span class="price">From ₹450</span>
+                        </div>
+                        <div class="route-card">
+                            <span class="route">Bangalore → Chennai</span>
+                            <span class="price">From ₹520</span>
+                        </div>
+                        <div class="route-card">
+                            <span class="route">Hyderabad → Mumbai</span>
+                            <span class="price">From ₹680</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bus Listing Section -->
+        <section id="bus-listing-section" class="section">
+            <div class="container">
+                <div class="search-summary">
+                    <h3 id="search-summary-text">Available Buses</h3>
+                    <button class="btn btn--secondary" id="modify-search">Modify Search</button>
+                </div>
+                
+                <div class="listing-container">
+                    <div class="filters-sidebar">
+                        <h4>Filters</h4>
+                        
+                        <div class="filter-group">
+                            <h5>Departure Time</h5>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="early-morning" class="time-filter">
+                                <span class="checkmark"></span>
+                                Before 6 AM
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="morning" class="time-filter">
+                                <span class="checkmark"></span>
+                                6 AM - 12 PM
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="afternoon" class="time-filter">
+                                <span class="checkmark"></span>
+                                12 PM - 6 PM
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="night" class="time-filter">
+                                <span class="checkmark"></span>
+                                After 6 PM
+                            </label>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h5>Bus Type</h5>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="AC" class="type-filter">
+                                <span class="checkmark"></span>
+                                AC
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="Non-AC" class="type-filter">
+                                <span class="checkmark"></span>
+                                Non-AC
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="Sleeper" class="type-filter">
+                                <span class="checkmark"></span>
+                                Sleeper
+                            </label>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h5>Price Range</h5>
+                            <div class="price-range">
+                                <input type="range" id="price-range" min="200" max="1000" value="1000" class="price-slider">
+                                <div class="price-labels">
+                                    <span>₹200</span>
+                                    <span id="max-price">₹1000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="buses-content">
+                        <div class="sort-options">
+                            <label>Sort by:</label>
+                            <select id="sort-select" class="form-control">
+                                <option value="departure">Departure Time</option>
+                                <option value="price-low">Price - Low to High</option>
+                                <option value="price-high">Price - High to Low</option>
+                                <option value="duration">Duration</option>
+                                <option value="rating">Rating</option>
+                            </select>
+                        </div>
+                        
+                        <div id="buses-list" class="buses-list">
+                            <!-- Bus cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seat Selection Section -->
+        <section id="seat-selection-section" class="section">
+            <div class="container">
+                <div class="seat-selection-header">
+                    <button class="btn btn--secondary" id="back-to-buses">← Back to Buses</button>
+                    <h3 id="selected-bus-info">Select Your Seats</h3>
+                </div>
+                
+                <div class="seat-selection-container">
+                    <div class="seat-layout">
+                        <div class="bus-layout">
+                            <div class="deck-title">Lower Deck</div>
+                            <div class="seats-grid" id="lower-deck">
+                                <!-- Seats will be populated here -->
+                            </div>
+                            
+                            <div class="deck-title">Upper Deck</div>
+                            <div class="seats-grid" id="upper-deck">
+                                <!-- Seats will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="seat-legend">
+                            <div class="legend-item">
+                                <span class="seat-icon available"></span>
+                                <span>Available</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="seat-icon selected"></span>
+                                <span>Selected</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="seat-icon booked"></span>
+                                <span>Booked</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-details">
+                        <div class="selected-seats">
+                            <h4>Selected Seats</h4>
+                            <div id="selected-seats-list">
+                                <p class="no-seats">No seats selected</p>
+                            </div>
+                        </div>
+                        
+                        <div class="boarding-points">
+                            <h4>Boarding Point</h4>
+                            <select id="boarding-point" class="form-control">
+                                <option value="">Select boarding point</option>
+                                <option value="Central Bus Station">Central Bus Station - 06:00 AM</option>
+                                <option value="Railway Station">Railway Station - 06:15 AM</option>
+                                <option value="Airport">Airport - 06:30 AM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="dropping-points">
+                            <h4>Dropping Point</h4>
+                            <select id="dropping-point" class="form-control">
+                                <option value="">Select dropping point</option>
+                                <option value="City Center">City Center - 09:30 AM</option>
+                                <option value="Bus Stand">Main Bus Stand - 09:45 AM</option>
+                                <option value="Mall">Shopping Mall - 10:00 AM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="fare-summary">
+                            <div class="fare-row">
+                                <span>Base Fare:</span>
+                                <span id="base-fare">₹0</span>
+                            </div>
+                            <div class="fare-row">
+                                <span>Taxes:</span>
+                                <span id="taxes">₹0</span>
+                            </div>
+                            <div class="fare-row total">
+                                <span>Total:</span>
+                                <span id="total-fare">₹0</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn--primary btn--full-width" id="proceed-to-booking" disabled>
+                            Proceed to Booking
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Form Section -->
+        <section id="booking-form-section" class="section">
+            <div class="container">
+                <div class="booking-header">
+                    <button class="btn btn--secondary" id="back-to-seats">← Back to Seat Selection</button>
+                    <h3>Passenger Details & Payment</h3>
+                </div>
+                
+                <div class="booking-container">
+                    <div class="booking-form">
+                        <form id="passenger-form">
+                            <div id="passenger-details">
+                                <!-- Passenger forms will be populated here -->
+                            </div>
+                            
+                            <div class="contact-details">
+                                <h4>Contact Details</h4>
+                                <div class="form-group">
+                                    <label class="form-label">Email *</label>
+                                    <input type="email" id="contact-email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Mobile Number *</label>
+                                    <input type="tel" id="contact-mobile" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-options">
+                                <h4>Payment Options</h4>
+                                <div class="payment-methods">
+                                    <label class="radio-label">
+                                        <input type="radio" name="payment" value="upi" checked>
+                                        <span class="radio-mark"></span>
+                                        UPI Payment
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="payment" value="card">
+                                        <span class="radio-mark"></span>
+                                        Credit/Debit Card
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="payment" value="netbanking">
+                                        <span class="radio-mark"></span>
+                                        Net Banking
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="booking-summary">
+                        <h4>Booking Summary</h4>
+                        <div class="summary-details">
+                            <div class="trip-info">
+                                <div class="route">
+                                    <span id="summary-route">Mumbai → Pune</span>
+                                </div>
+                                <div class="date-time">
+                                    <span id="summary-date">30 Aug 2025</span>
+                                    <span id="summary-time">06:00 AM</span>
+                                </div>
+                                <div class="bus-info">
+                                    <span id="summary-operator">SRS Travels</span>
+                                    <span id="summary-bus-type">AC Sleeper</span>
+                                </div>
+                            </div>
+                            
+                            <div class="passenger-info">
+                                <h5>Passengers</h5>
+                                <div id="summary-passengers">
+                                    <!-- Passenger summary will be populated here -->
+                                </div>
+                            </div>
+                            
+                            <div class="fare-breakdown">
+                                <div class="fare-row">
+                                    <span>Ticket Fare:</span>
+                                    <span id="summary-base-fare">₹0</span>
+                                </div>
+                                <div class="fare-row">
+                                    <span>Taxes & Fees:</span>
+                                    <span id="summary-taxes">₹0</span>
+                                </div>
+                                <div class="fare-row total">
+                                    <span>Total Amount:</span>
+                                    <span id="summary-total">₹0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn--primary btn--full-width" id="complete-booking">
+                            Pay & Complete Booking
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Sections (Hidden by default) -->
+        <section id="bookings-section" class="section">
+            <div class="container">
+                <h2>My Bookings</h2>
+                <div class="empty-state">
+                    <p>No bookings found. Start your journey by booking a ticket!</p>
+                    <button class="btn btn--primary" onclick="showSection('home')">Book Now</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="help-section" class="section">
+            <div class="container">
+                <h2>Help & Support</h2>
+                <div class="help-content">
+                    <div class="faq">
+                        <h3>Frequently Asked Questions</h3>
+                        <div class="faq-item">
+                            <h4>How do I cancel my booking?</h4>
+                            <p>You can cancel your booking from the "My Bookings" section. Cancellation charges may apply as per our policy.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Can I modify my booking?</h4>
+                            <p>Yes, you can modify your booking subject to availability and operator policies.</p>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Contact Us</h3>
+                        <p>📞 Customer Support: 1800-123-4567</p>
+                        <p>📧 Email: support@tedbus.com</p>
+                        <p>🕒 Available 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="login-section" class="section">
+            <div class="container">
+                <div class="login-container">
+                    <div class="login-form">
+                        <h2>Login to TedBus</h2>
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label">Email/Mobile</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+                        </form>
+                        <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="success-icon">✅</div>
+            <h3>Booking Confirmed!</h3>
+            <p>Your ticket has been booked successfully. You will receive a confirmation email shortly.</p>
+            <div class="booking-ref">
+                <strong>Booking ID: <span id="booking-id">TB12345678</span></strong>
+            </div>
+            <button class="btn btn--primary" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
